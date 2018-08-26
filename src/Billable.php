@@ -208,13 +208,23 @@ trait Billable
     }
 
     /**
+     * Get the default class name for the subscriptions relation.
+     *
+     * @return string
+     */
+    public function getSubscriptionClass()
+    {
+        return Subscription::class;
+    }
+
+    /**
      * Get all of the subscriptions for the Stripe model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function subscriptions()
     {
-        return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
+        return $this->hasMany($this->getSubscriptionClass(), $this->getForeignKey())->orderBy('created_at', 'desc');
     }
 
     /**
